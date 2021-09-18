@@ -51,6 +51,7 @@ export default function SensorComponent() {
   return (
     <View style={styles.container}>
       <Text style={styles.paragraph}>{text}</Text>
+      <Text>{distance}</Text>
     </View>
   );
 }
