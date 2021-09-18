@@ -1,20 +1,34 @@
-import React from "react";
-import { View, Text } from "react-native";
+import React, { useEffect } from "react";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import firebase from "firebase";
 
-export default function LoadingScreen() {
-  checkLogIn = () => {
+export const LoadingScreen = ({ navigation }) => {
+  const navigateLogin = () => navigation.replace("Login");
+  const navigateHome = () => navigation.replace("Home");
+  const checkLogIn = () => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        () => navigation.replace("Home");
+        navigateHome();
       } else {
-        () => navigation.replace("Login");
+        navigateLogin();
       }
     });
   };
+
+  useEffect(() => {
+    checkLogIn();
+  }, []);
   return (
-    <View>
-      <Text></Text>
+    <View style={styles.container}>
+      <ActivityIndicator size="large" color="#257291" />
     </View>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

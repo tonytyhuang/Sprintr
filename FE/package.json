@@ -15,8 +15,10 @@
     "@react-native-firebase/auth": "^12.8.0",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
-    "expo": "~42.0.1",
+    "expo": "^42.0.3",
     "expo-google-sign-in": "~9.2.1",
+    "expo-location": "~12.1.2",
+    "expo-sensors": "~10.2.2",
     "expo-status-bar": "~1.0.4",
     "firebase": "8.2.3",
     "react": "16.13.1",
@@ -28,8 +30,7 @@
     "react-native-sensors": "^7.3.3",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
-    "websocket": "^1.0.34",
-    "expo-sensors": "~10.2.2"
+    "websocket": "^1.0.34"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

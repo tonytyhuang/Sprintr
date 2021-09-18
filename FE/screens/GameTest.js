@@ -5,6 +5,7 @@ import CountDown from '../components/Countdown';
 import { SocketContext } from '../SocketContext';
 import SensorComponent from '../components/Sensor';
 
+
 function GameTestPage({navigation}){
     const {socket, room, setRoom, race, setRace} = useContext(SocketContext);
     
@@ -28,7 +29,7 @@ function GameTestPage({navigation}){
     });
     return(
         <View>
-            <SensorComponent/>
+           <SensorComponent/>
         </View>
     );
 }
