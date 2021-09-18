@@ -18,7 +18,7 @@ const LoginPage = ({ navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Image source={require("../assets/icon.png")} style={styles.logo} />
+      <Image source={require("../assets/sprintr.png")} style={styles.logo} />
       <Text style={styles.text}>Sprintr</Text>
 
       <LoginInput
@@ -85,12 +85,13 @@ const styles = StyleSheet.create({
     paddingTop: 50,
   },
   logo: {
-    height: 150,
-    width: 150,
+    height: 100,
+    width: 100,
     resizeMode: "cover",
   },
   text: {
     fontSize: 28,
+    marginTop: 20,
     marginBottom: 10,
     color: "#051d5f",
   },
