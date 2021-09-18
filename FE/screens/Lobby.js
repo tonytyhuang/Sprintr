@@ -1,16 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState, useContext, useEffect} from 'react';
 import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { client } from 'websocket';
 import { SocketContext } from '../SocketContext';
 
 function LobbyPage({navigation}){
     const socket = useContext(SocketContext);
     const [name, setName] = useState('');
     const [roomId, setRoomId] = useState('');
-
-    useEffect(() => {
-        console.log(socket);
-    }, []);
 
     const enterRoom = (n, r) => {
         
@@ -32,6 +29,9 @@ function LobbyPage({navigation}){
             <Button
                 title='start'
                 onPress={()=>{
+                    socket.send(JSON.stringify({
+                        text: "Joining game..."
+                    }));
                     navigation.navigate('Game');
                 }}
             />

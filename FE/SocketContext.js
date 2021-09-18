@@ -7,12 +7,12 @@ const SocketContext = React.createContext();
 const client = new W3CWebSocket(SocketLink);
 
 const SocketProvider = ({ children }) => {
-  const [socketState, setSocketState] = useState(null);
+  const [socket, setSocket] = useState(null);
   const [pending, setPending] = useState(true);
 
   client.onopen = () => {
     console.log("connected to socket from context");
-    setSocketState("connected");
+    setSocket(client);
     setPending(false);
   }
 
@@ -21,7 +21,7 @@ const SocketProvider = ({ children }) => {
   }
   return (
     <SocketContext.Provider
-      value={socketState}
+      value={socket}
     >
       {children}
     </SocketContext.Provider>
