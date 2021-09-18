@@ -4,7 +4,7 @@ import { w3cwebsocket as W3CWebSocket } from "websocket";
 import SocketLink from "./SocketLink";
 
 const SocketContext = React.createContext();
-const client = new W3CWebSocket(SocketLink);
+const client = new W3CWebSocket("ws://" + SocketLink + "/ws");
 
 const SocketProvider = ({ children }) => {
   // Socket is a reference to the websocket, each component can directly send messages
@@ -22,6 +22,13 @@ const SocketProvider = ({ children }) => {
 
   client.onopen = () => {
     console.log("connected to socket from context");
+    client.send(JSON.stringify({
+      operation: "initiate",
+      data: {
+        id: 123
+      },
+      text: "Initiating client connection"
+    }));
     setSocket(client);
     setPending(false);
   }
@@ -38,12 +45,16 @@ const SocketProvider = ({ children }) => {
     }
   }
 
+  client.onerror = (err) => {
+    console.log("an error occurred");
+  }
+
   if(pending){
     return <Text>Loading...</Text>
   }
   return (
     <SocketContext.Provider
-      value={{socket, room, race}}
+      value={{socket, room, setRoom, race, setRace}}
     >
       {children}
     </SocketContext.Provider>
