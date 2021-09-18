@@ -7,6 +7,27 @@ function PreRacePage({navigation}){
     const {socket, room, setRoom, race, setRace} = useContext(SocketContext);
     const [ready, setReady] = useState(false);
     
+    useEffect(() => {
+        // Remove from room
+        const events = [navigation.addListener('beforeRemove', (e) => {
+            console.log("running beforeremove");
+            socket.send(JSON.stringify({
+                operation: "leave-room",
+                data: {
+                    roomID: room.id,
+                    clientID: 123
+                },
+                text: ("Client " + 123 + " leaving " + room.id)
+            }));
+        })];
+
+        return function cleanup() {
+            events.forEach((unsub) => {
+                unsub();
+            });
+        };
+    }, []);
+
     // When somebody joins the room
     useEffect(() => {
         if (room) {
@@ -16,16 +37,7 @@ function PreRacePage({navigation}){
     }, [room]);
 
     // Remove from room
-    navigation.addListener('beforeRemove', (e) => {
-        socket.send(JSON.stringify({
-            operation: "leave-room",
-            data: {
-                roomID: room.id,
-                clientID: 123
-            },
-            text: ("Client " + 123 + " leaving")
-        }));
-    });
+    
     return(
         <View>
             <View style={styles.headerContainer}>

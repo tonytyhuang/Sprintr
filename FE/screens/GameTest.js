@@ -9,6 +9,22 @@ import SensorComponent from '../components/Sensor';
 function GameTestPage({navigation}){
     const {socket, room, setRoom, race, setRace} = useContext(SocketContext);
     
+    useEffect(() => {
+        // Remove from room
+        const remove = navigation.addListener('beforeRemove', (e) => {
+            console.log("running beforeRemove event");
+            socket.send(JSON.stringify({
+                operation: "leave-room",
+                data: {
+                    roomID: room.id,
+                    clientID: 123
+                }
+            }));
+        });
+
+        return remove();
+    }, [])
+
     // When somebody joins the room
     useEffect(() => {
         if (room) {
@@ -17,16 +33,7 @@ function GameTestPage({navigation}){
         }
     }, [room]);
 
-    // Remove from room
-    navigation.addListener('beforeRemove', (e) => {
-        socket.send(JSON.stringify({
-            operation: "leave-room",
-            data: {
-                roomID: room.id,
-                clientID: 123
-            }
-        }));
-    });
+    
     return(
         <View>
            <SensorComponent/>

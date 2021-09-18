@@ -118,11 +118,12 @@ wss.on('connection', (ws) => {
             // Update room for users still in the room
             updateRoom(roomID);
             // Delete room if empty
-            if (rooms[roomID].friends.length === 0) {
+            if (Object.keys(rooms[roomID].friends).length === 0) {
+                console.log("delete room " + roomID);
                 delete rooms[roomID];
             }
         } else if (message.operation === "update-ready") {
-            // Ready/unready in the pre-race stage
+            // Ready/unready in the pre-race stages
             let clientID = message.data.clientID;
             let newReady = message.data.ready;
             let roomID = message.data.roomID;
