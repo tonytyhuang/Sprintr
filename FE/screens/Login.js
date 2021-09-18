@@ -28,7 +28,7 @@ const LoginPage = ({ navigation }) => {
         .signInWithEmailAndPassword(email, password)
         .then((user) => {
           const userCreds = user;
-          console.log(userCreds);
+          // console.log(userCreds);
         })
         .catch((err) => {
           console.log(err);

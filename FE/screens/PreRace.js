@@ -9,7 +9,7 @@ import firebase from 'firebase';
 function PreRacePage({navigation}){
     const {socket, room, setRoom, race, setRace} = useContext(SocketContext);
     const [ready, setReady] = useState(false);
-    
+    const user = firebase.auth().currentUser;
     useEffect(() => {
         // Remove from room
         const events = [navigation.addListener('beforeRemove', (e) => {
@@ -18,9 +18,9 @@ function PreRacePage({navigation}){
                 operation: "leave-room",
                 data: {
                     roomID: room.id,
-                    clientID: 123
+                    clientID: user.uid
                 },
-                text: ("Client " + 123 + " leaving " + room.id)
+                text: ("Client " + user.uid + " leaving " + room.id)
             }));
         })];
 
@@ -57,11 +57,11 @@ function PreRacePage({navigation}){
                         socket.send(JSON.stringify({
                             operation: "update-ready",
                             data: {
-                                clientID: 123,
+                                clientID: user.uid,
                                 roomID: room.id,
                                 ready: !ready
                             },
-                            text: ("Update ready for client " + 123)
+                            text: ("Update ready for client " + user.uid)
                         }));
                     }}
                     style={styles.readyBtn}

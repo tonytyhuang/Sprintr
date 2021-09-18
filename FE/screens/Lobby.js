@@ -4,11 +4,14 @@ import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
 import { client } from 'websocket';
 import { SocketContext } from '../SocketContext';
 import SocketLink from "../SocketLink";
+import firebase from "firebase";
 
 function LobbyPage({navigation}){
     const {socket, room, setRoom, race, setRace} = useContext(SocketContext);
     const [name, setName] = useState('');
     const [roomId, setRoomId] = useState(-1);
+
+    const user = firebase.auth().currentUser;
 
     const createRoomNotFoundAlert = () => {
         Alert.alert(
@@ -48,7 +51,7 @@ function LobbyPage({navigation}){
                         },
                         body: JSON.stringify({
                             roomID: roomId,
-                            clientID: 123
+                            clientID: user.uid
                         })
                     })
                         .then((json) => json.json())
