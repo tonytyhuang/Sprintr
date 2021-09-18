@@ -20,6 +20,9 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
+// Global variables
+var rooms = {};
+
 // When client connects
 wss.on('connection', (ws) => {
     console.log("[Server] A client connected to the socket.");
@@ -35,9 +38,22 @@ wss.on('connection', (ws) => {
 
     ws.on('message', (msg) => {
         console.log("[Server] A message arrived: ");
-        console.log(JSON.parse(msg).text);
-        ws.send(JSON.stringify({
-            response: "Got your message"
-        }));
+        let message = JSON.parse(msg).text;
+        console.log(message);
+
+        // Joining game
+        if (message === "Joining game...") {
+            // Creat room ID and send details back
+            let roomID = Math.floor(Math.random() * 100);
+            rooms[roomID] = {
+                friends: [1]
+            };
+            ws.send(JSON.stringify({
+                operation: "update-room",
+                data: {
+                    roomID: roomID
+                }
+            }));
+        }
     });
 })

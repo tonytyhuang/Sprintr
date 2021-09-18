@@ -5,9 +5,11 @@ import { client } from 'websocket';
 import { SocketContext } from '../SocketContext';
 
 function LobbyPage({navigation}){
-    const socket = useContext(SocketContext);
+    const {socket, room, race} = useContext(SocketContext);
     const [name, setName] = useState('');
     const [roomId, setRoomId] = useState('');
+
+    
 
     const enterRoom = (n, r) => {
         
