@@ -93,7 +93,7 @@ wss.on('connection', (ws) => {
             clients[clientID] = {
                 socket: ws
             }
-            console.log(clients);
+            console.log("Client " + clientID + " joined");
         }
     });
 })
