@@ -8,6 +8,7 @@ import LobbyPage from './screens/Lobby';
 import SignupPage from './screens/Signup';
 import LoginPage from './screens/Login';
 import GamePage from './screens/Game';
+import GameTestPage from './screens/GameTest';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +20,7 @@ export default function App() {
         <Stack.Screen name="Login" component={LoginPage} />
         <Stack.Screen name="Signup" component={SignupPage} />
         <Stack.Screen name="Lobby" component={LobbyPage} />
-        <Stack.Screen name="Game" component={GamePage} />
+        <Stack.Screen name="Game" component={GameTestPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
