@@ -1,8 +1,14 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const WebSocket = require('ws');
 const SocketServer = require('ws').Server;
 
 const app = express();
 const port = 3000;
+
+app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.json());
+
 const server = app.listen(port, () => {
     console.log("Listening at port " + port);
 });
@@ -11,7 +17,7 @@ const server = app.listen(port, () => {
 const wss = new SocketServer({ server })
 
 app.get('/', (req, res) => {
-    res.send("Hello world");
+    res.sendFile(__dirname + '/index.html');
 });
 
 // When client connects
