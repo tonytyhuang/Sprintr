@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Platform, Text, View, StyleSheet } from 'react-native';
-import Constants from 'expo-constants';
-import * as Location from 'expo-location';
+import React, { useState, useEffect } from "react";
+import { Platform, Text, View, StyleSheet } from "react-native";
+import Constants from "expo-constants";
+import * as Location from "expo-location";
 
 export default function SensorComponent() {
   const [timer, setTimer] = useState(0);
@@ -11,37 +11,38 @@ export default function SensorComponent() {
 
   useEffect(() => {
     (async () => {
-      if (Platform.OS === 'android' && !Constants.isDevice) {
+      if (Platform.OS === "android" && !Constants.isDevice) {
         setErrorMsg(
-          'Oops, this will not work on Snack in an Android emulator. Try it on your device!'
+          "Oops, this will not work on Snack in an Android emulator. Try it on your device!"
         );
         return;
       }
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('denied')
+      if (status !== "granted") {
+        console.log("denied");
         return;
       }
-      console.log(status)
+      console.log(status);
     })();
-    const interval = setInterval(async()=>{
-      let location = await Location.getCurrentPositionAsync({});
-      setDistance(distance => distance + location.coords.speed * timer)
-      setTimer(0);
-      setLocation(location);
-
-    }, 10)
-    const interval2 = setInterval(()=>{
-      setTimer(timer => timer + 0.01);
-    }, 10)
+    const interval = setInterval(async () => {
+      let location = await Location.watchPositionAsync(
+        {
+          accuracy: Location.Accuracy.BestForNavigation,
+          timeInterval: 1000,
+        },
+        (loc) => {
+          setDistance((distance += loc.coords.speed));
+          console.log(loc);
+        }
+      );
+    }, 1000);
 
     return () => {
       clearInterval(interval);
-      clearInterval(interval2);
-    }
+    };
   }, []);
 
-  let text = 'Waiting..';
+  let text = "Waiting..";
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
@@ -59,18 +60,15 @@ export default function SensorComponent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     padding: 20,
   },
   paragraph: {
     fontSize: 18,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
-
-
-
 
 // import React, { useState, useEffect } from 'react';
 // import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
