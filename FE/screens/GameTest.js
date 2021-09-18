@@ -5,6 +5,7 @@ import CountDown from '../components/Countdown';
 import { SocketContext } from '../SocketContext';
 import SensorComponent from '../components/Sensor';
 
+
 function GameTestPage({navigation}){
     const {socket, room, race} = useContext(SocketContext);
     useEffect(() => {
