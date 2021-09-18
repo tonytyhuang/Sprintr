@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Accelerometer } from 'expo-sensors';
 
-export default function App() {
+export default function SensorComponent() {
   const [data, setData] = useState({
     x: 0,
     y: 0,
     z: 0,
   });
   const [subscription, setSubscription] = useState(null);
-  
+
   const _subscribe = () => {
     setSubscription(
       Accelerometer.addListener(accelerometerData => {
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 10,
+    paddingVertical: 100
   },
   text: {
     textAlign: 'center',
