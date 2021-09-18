@@ -96,6 +96,26 @@ wss.on('connection', (ws) => {
                 socket: ws
             }
             console.log("Client " + clientID + " joined");
+        } else if (message.operation === "leave-room") {
+            let clientID = message.data.clientID;
+            let roomID = message.data.roomID;
+            console.log(clientID + " leaving room " + roomID);
+            // Remove user from their room
+            rooms[roomID].friends.splice(rooms[roomID].friends.indexOf(clientID));
+            // Update room for users still in the room
+            for (let i = 0; i < rooms[roomID].friends.length; i++) {
+                ws.send(JSON.stringify({
+                    operation: "update-room",
+                    data: {
+                        roomID: roomID,
+                        friends: rooms[requestRoomID].friends
+                    }
+                }));
+            }
+            // Delete room if empty
+            if (rooms[roomID].friends.length === 0) {
+                delete rooms[roomID];
+            }
         }
     });
 })
