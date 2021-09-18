@@ -14,16 +14,7 @@ import { SocketContext, SocketProvider } from "./SocketContext";
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
-  // const socket = useContext(SocketContext);
-
-  useEffect(() => {
-    // socket.onopen = () => {
-    //   console.log("connected");
-    // }
-    
-  }, []);
-  
+export default function App() {  
   return (
     <SocketProvider>
       <NavigationContainer>
