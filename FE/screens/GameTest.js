@@ -9,7 +9,8 @@ function GameTestPage({navigation}){
     const {socket, room, race} = useContext(SocketContext);
     useEffect(() => {
         if (room) {
-            console.log("Joined room " + room.id);
+            console.log("Updated " + room.id);
+            console.log(room.friends);
         }
     }, [room]);
     return(

@@ -39,7 +39,7 @@ const SocketProvider = ({ children }) => {
       let id = msg.data.roomID;
       setRoom({
         id: id,
-        friends: [1]
+        friends: msg.data.friends
       });
       console.log(id);
     }

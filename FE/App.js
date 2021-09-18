@@ -16,13 +16,7 @@ import { firebaseConfig } from "./config";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  // const socket = useContext(SocketContext);
   firebase.initializeApp(firebaseConfig);
-  useEffect(() => {
-    // socket.onopen = () => {
-    //   console.log("connected");
-    // }
-  }, []);
 
   return (
     <SocketProvider>
