@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
-import { windowHeight } from "../utils/Dimentions";
+import { windowHeight, windowWidth } from "../utility/dimension";
 
 const LoginButton = ({ buttonTitle, ...rest }) => {
   return (

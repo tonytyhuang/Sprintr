@@ -18,10 +18,7 @@ const LoginPage = ({ navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Image
-        source={require("../assets/rn-social-logo.png")}
-        style={styles.logo}
-      />
+      <Image source={require("../assets/icon.png")} style={styles.logo} />
       <Text style={styles.text}>RN Social App</Text>
 
       <LoginInput
