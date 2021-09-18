@@ -3,8 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { w3cwebsocket as W3CWebSocket } from "websocket";
-import SocketLink from "SocketLink";
+import { SocketProvider } from './SocketContext';
 import HomePage from './screens/Home'
 import LobbyPage from './screens/Lobby';
 import SignupPage from './screens/Signup';
@@ -14,18 +13,19 @@ import GameTestPage from './screens/GameTest';
 import { OnboardingScreen } from "./screens/Onboarding";
 
 const Stack = createNativeStackNavigator();
-const client = new W3CWebSocket(SocketLink);
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Sprintr" component={OnboardingScreen} />
-        <Stack.Screen name="Login" component={LoginPage} />
-        <Stack.Screen name="Signup" component={SignupPage} />
-        <Stack.Screen name="Lobby" component={LobbyPage} />
-        <Stack.Screen name="Game" component={GameTestPage} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SocketProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Sprintr" component={OnboardingScreen} />
+          <Stack.Screen name="Login" component={LoginPage} />
+          <Stack.Screen name="Signup" component={SignupPage} />
+          <Stack.Screen name="Lobby" component={LobbyPage} />
+          <Stack.Screen name="Game" component={GameTestPage} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SocketProvider>
   );
 }
