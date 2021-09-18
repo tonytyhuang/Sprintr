@@ -21,12 +21,20 @@ export default function SensorComponent() {
         return;
       }
       console.log(status)
-
-      let location = await Location.getCurrentPositionAsync({});
-      console.log(location)
-      setLocation(location);
-      console.log("Here")
+      
+      // let location = await Location.getCurrentPositionAsync({});
+      // console.log(location)
+      // setLocation(location);
+      // console.log("Here")
     })();
+    const interval = setInterval(async()=>{
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    }, 1000)
+
+    return () => {
+      clearInterval(interval);
+    }
   }, []);
 
   let text = 'Waiting..';

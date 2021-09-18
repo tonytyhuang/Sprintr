@@ -19,6 +19,10 @@ function HomePage({ navigation }) {
         title="Signup Page"
         onPress={() => navigation.navigate("Signup")}
       ></Button>
+       <Button
+        title="Signup Page"
+        onPress={() => navigation.navigate("Game")}
+      ></Button>
       <Button title="Logout" onPress={() => firebase.auth().signOut()}></Button>
       <StatusBar style="auto" />
     </View>
