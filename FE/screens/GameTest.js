@@ -15,7 +15,7 @@ function GameTestPage({navigation}){
     }, [room]);
     return(
         <View>
-            {/* <SensorComponent/> */}
+            <SensorComponent/>
         </View>
     );
 }
