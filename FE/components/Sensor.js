@@ -4,6 +4,8 @@ import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 
 export default function SensorComponent() {
+  const [timer, setTimer] = useState(0);
+  const [distance, setDistance] = useState(0);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
@@ -21,19 +23,21 @@ export default function SensorComponent() {
         return;
       }
       console.log(status)
-      
-      // let location = await Location.getCurrentPositionAsync({});
-      // console.log(location)
-      // setLocation(location);
-      // console.log("Here")
     })();
     const interval = setInterval(async()=>{
       let location = await Location.getCurrentPositionAsync({});
+      setDistance(distance => distance + location.coords.speed * timer)
+      setTimer(0);
       setLocation(location);
-    }, 1000)
+
+    }, 10)
+    const interval2 = setInterval(()=>{
+      setTimer(timer => timer + 0.01);
+    }, 10)
 
     return () => {
       clearInterval(interval);
+      clearInterval(interval2);
     }
   }, []);
 
