@@ -15,7 +15,6 @@ import firebase from "firebase";
 import { firebaseConfig } from "./config";
 const Stack = createNativeStackNavigator();
 
-<<<<<<< HEAD
 export default function App() {
   // const socket = useContext(SocketContext);
   firebase.initializeApp(firebaseConfig);
@@ -25,9 +24,6 @@ export default function App() {
     // }
   }, []);
 
-=======
-export default function App() {  
->>>>>>> c6bb44c942d3a8820b82e49facb28a89e53a9a31
   return (
     <SocketProvider>
       <NavigationContainer>
