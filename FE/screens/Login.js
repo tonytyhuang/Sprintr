@@ -7,14 +7,35 @@ import {
   Platform,
   StyleSheet,
   ScrollView,
+  Alert,
 } from "react-native";
 import LoginInput from "../components/LoginInput";
 import FormButton from "../components/LoginButton";
 import SocialButton from "../components/OAuthButton";
+import firebase from "firebase";
 
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const logInEmail = () => {
+    if (!email) {
+      Alert.alert("Must fill in email!");
+    } else if (!password) {
+      Alert.alert("Must fill in password!");
+    } else {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then((user) => {
+          const userCreds = user;
+          console.log(userCreds);
+        })
+        .catch((err) => {
+          console.log(err);
+          Alert.alert(err.message);
+        });
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -39,7 +60,7 @@ const LoginPage = ({ navigation }) => {
         secureTextEntry={true}
       />
 
-      <FormButton buttonTitle="Sign In" />
+      <FormButton buttonTitle="Sign In" onPress={logInEmail} />
 
       <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
         <Text style={styles.navButtonText}>Forgot Password?</Text>
