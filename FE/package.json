@@ -27,14 +27,9 @@
     "react-native-screens": "~3.4.0",
     "react-native-sensors": "^7.3.3",
     "react-native-vector-icons": "^8.1.0",
-<<<<<<< HEAD
-    "react-native-web": "^0.13.18",
-    "websocket": "^1.0.34"
-=======
     "react-native-web": "~0.13.12",
     "websocket": "^1.0.34",
     "expo-sensors": "~10.2.2"
->>>>>>> c6bb44c942d3a8820b82e49facb28a89e53a9a31
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
