@@ -49,7 +49,11 @@ app.post('/join-game', (req, res) => {
     console.log(clientID);
     if (requestRoomID < 0) {
         // If no request, generate new room
-        let roomID = Math.floor(Math.random() * 100);
+        let roomID = Math.floor(Math.random() * 10000);
+        while (roomID in rooms) {
+            roomID = Math.floor(Math.random() * 10000);
+        }
+        
         rooms[roomID] = {
             friends: {
                 [clientID]: {
