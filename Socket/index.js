@@ -41,7 +41,8 @@ app.post('/join-game', (req, res) => {
         };
         res.send({
             joined: true,
-            id: roomID
+            id: roomID,
+            friends: [clientID]
         });
     } else if (requestRoomID in rooms) {
         rooms[requestRoomID].friends.push(clientID);
@@ -60,7 +61,8 @@ app.post('/join-game', (req, res) => {
         // If requested room exists, send player to that room
         res.send({
             joined: true,
-            id: requestRoomID
+            id: requestRoomID,
+            friends: rooms[requestRoomID].friends
         });
     } else {
         // If requested room doesn't exist, send error

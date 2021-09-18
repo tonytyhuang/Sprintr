@@ -57,7 +57,7 @@ function LobbyPage({navigation}){
                                 // Update room data and go to game page
                                 setRoom({
                                     id: data.id,
-                                    friends: [1]
+                                    friends: data.friends
                                 });
                                 navigation.navigate('Game');
                             } else {
