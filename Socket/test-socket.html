@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+
+        <script>
+            var ws = new WebSocket("ws://localhost:3000");
+
+            ws.onopen = () => {
+                console.log("[Client] connected to websocket");
+
+                ws.send(JSON.stringify({text: 'I\'m a client'}));
+            }
+
+            ws.onmessage = (msg) => {
+                console.log("[Client] A message arrived: ");
+                console.log(msg);
+            }
+        </script>
+    </body>
+</html>
