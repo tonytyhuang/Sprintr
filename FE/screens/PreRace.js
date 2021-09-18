@@ -1,12 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useContext, useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 import { SocketContext } from '../SocketContext';
+import firebase from 'firebase';
+
+// const user = firebase.auth().currentUser;
 
 function PreRacePage({navigation}){
     const {socket, room, setRoom, race, setRace} = useContext(SocketContext);
     const [ready, setReady] = useState(false);
-    
+    const user = firebase.auth().currentUser;
     useEffect(() => {
         // Remove from room
         const events = [navigation.addListener('beforeRemove', (e) => {
@@ -15,12 +18,13 @@ function PreRacePage({navigation}){
                 operation: "leave-room",
                 data: {
                     roomID: room.id,
-                    clientID: 123
+                    clientID: user.uid
                 },
-                text: ("Client " + 123 + " leaving " + room.id)
+                text: ("Client " + user.uid + " leaving " + room.id)
             }));
         })];
 
+        // Unsubscribe to events when page closes
         return function cleanup() {
             events.forEach((unsub) => {
                 unsub();
@@ -35,45 +39,48 @@ function PreRacePage({navigation}){
             console.log(room.friends);
         }
     }, [room]);
-
-    // Remove from room
     
     return(
-        <View>
+        <View style={styles.bigWrapper}>
             <View style={styles.headerContainer}>
                 <Text style={styles.header}>Racers</Text>
-                <Text style={styles.subheader}>Get warmed up. Start stretching.</Text>
+                <Text style={styles.subheader}>Get warmed up. Start stretching. 🏃</Text>
             </View>
             <View style={styles.container}>
                 <View style={styles.roomIDContainer}>
                     <Text style={styles.roomID}>{room.id}</Text>
                     <Text style={styles.roomIDDesription}>Room code. Share with your friends to start racing.</Text>
                 </View>
-                {/* Iterate through all users in the room and display name and ready state */}
-                {Object.keys(room.friends).map(friend => {
-                    return (
-                        <View key={friend}>
-                            <Text>{friend}</Text>
-                            <Text>{room.friends[friend].ready ? "Ready" : "Not Ready"}</Text>
-                        </View>
-                    );
-                })}
-                <Button 
-                    title={ready ? "Unready" : "Ready Up"}
+                <TouchableOpacity
                     onPress={() => {
                         setReady(!ready);
                         socket.send(JSON.stringify({
                             operation: "update-ready",
                             data: {
-                                clientID: 123,
+                                clientID: user.uid,
                                 roomID: room.id,
                                 ready: !ready
                             },
-                            text: ("Update ready for client " + 123)
+                            text: ("Update ready for client " + user.uid)
                         }));
                     }}
-                />
+                    style={styles.readyBtn}
+                >
+                    <Text style={styles.readyBtnText}>{ready ? "Unready" : "Ready Up"}</Text>
+                </TouchableOpacity>
+                <View style={styles.friendsContainer}>
+                    {/* Iterate through all users in the room and display name and ready state */}
+                    {Object.keys(room.friends).map(friend => {
+                        return (
+                            <View key={friend} style={styles.friend}>
+                                <Text style={styles.friendName}>{friend}</Text>
+                                <Text style={styles.friendStatus}>{room.friends[friend].ready ? "✅ Ready" : "❌ Not Ready"}</Text>
+                            </View>
+                        );
+                    })}
                 </View>
+                
+            </View>
         </View>
     );
 }
@@ -111,6 +118,34 @@ const styles = StyleSheet.create({
     roomID: {
         fontWeight: 'bold',
         fontSize: 50,
+        textAlign: 'center'
+    },
+    friendsContainer: {
+        flexDirection: 'row',
+        marginVertical: 25
+    },
+    friend: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '33%',
+        paddingVertical: 10
+    },
+    friendName: {
+        fontWeight: 'bold',
+        fontSize: 17,
+        paddingBottom: 5
+    },
+    friendStatus: {
+        fontSize: 14
+    },
+    readyBtn: {
+        paddingVertical: 10,
+        marginVertical: 6,
+        backgroundColor: '#dde6ef'
+    },
+    readyBtnText: {
+        fontSize: 16,
+        fontWeight: 'bold',
         textAlign: 'center'
     }
 })

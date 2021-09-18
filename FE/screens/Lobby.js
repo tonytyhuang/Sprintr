@@ -12,6 +12,8 @@ function LobbyPage({navigation}){
     const [name, setName] = useState('');
     const [roomId, setRoomId] = useState(-1);
 
+    const user = firebase.auth().currentUser;
+
     const createRoomNotFoundAlert = () => {
         Alert.alert(
             "Room Not Found",
@@ -57,7 +59,7 @@ function LobbyPage({navigation}){
                         },
                         body: JSON.stringify({
                             roomID: roomId,
-                            clientID: 123
+                            clientID: user.uid
                         })
                     })
                         .then((json) => json.json())
