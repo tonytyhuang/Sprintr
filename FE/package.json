@@ -23,9 +23,11 @@
     "react-native-onboarding-swiper": "^1.1.4",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
+    "react-native-sensors": "^7.3.3",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
-    "websocket": "^1.0.34"
+    "websocket": "^1.0.34",
+    "expo-sensors": "~10.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

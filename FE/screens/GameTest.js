@@ -3,6 +3,7 @@ import React, { useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import CountDown from '../components/Countdown';
 import { SocketContext } from '../SocketContext';
+import SensorComponent from '../components/Sensor';
 
 function GameTestPage({navigation}){
     const {socket, room, race} = useContext(SocketContext);
@@ -13,8 +14,7 @@ function GameTestPage({navigation}){
     }, [room]);
     return(
         <View>
-            <CountDown/>
-            <Text>Test Game Page</Text>
+            <SensorComponent/>
         </View>
     );
 }
