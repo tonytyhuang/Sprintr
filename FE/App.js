@@ -1,29 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomePage from './screens/Home'
-import LobbyPage from './screens/Lobby';
-import SignupPage from './screens/Signup';
-import LoginPage from './screens/Login';
-import GamePage from './screens/Game';
-import GameTestPage from './screens/GameTest';
+import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useContext } from "react";
+import { StyleSheet, Text, View, Button } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import HomePage from "./screens/Home";
+import LobbyPage from "./screens/Lobby";
+import SignupPage from "./screens/Signup";
+import LoginPage from "./screens/Login";
+import GamePage from "./screens/Game";
+import GameTestPage from "./screens/GameTest";
 import { OnboardingScreen } from "./screens/Onboarding";
 import { SocketContext, SocketProvider } from "./SocketContext";
-
+import firebase from "firebase";
+import { firebaseConfig } from "./config";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   // const socket = useContext(SocketContext);
-
+  firebase.initializeApp(firebaseConfig);
   useEffect(() => {
     // socket.onopen = () => {
     //   console.log("connected");
     // }
-    
   }, []);
-  
+
   return (
     <SocketProvider>
       <NavigationContainer>
