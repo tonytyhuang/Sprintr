@@ -30,5 +30,8 @@ wss.on('connection', (ws) => {
     ws.on('message', (msg) => {
         console.log("[Server] A message arrived: ");
         console.log(JSON.parse(msg).text);
+        ws.send(JSON.stringify({
+            response: "Got your message"
+        }));
     });
 })

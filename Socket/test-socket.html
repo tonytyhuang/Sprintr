@@ -4,19 +4,27 @@
 
     </head>
     <body>
-
+        <button onClick='sendMsg()'>Click me!</button>
         <script>
             var ws = new WebSocket("ws://localhost:3000");
 
             ws.onopen = () => {
                 console.log("[Client] connected to websocket");
 
-                ws.send(JSON.stringify({text: 'I\'m a client'}));
+                ws.send(JSON.stringify({
+                    text: 'I\'m a client'
+                }));
             }
 
             ws.onmessage = (msg) => {
                 console.log("[Client] A message arrived: ");
-                console.log(msg);
+                console.log(JSON.parse(msg.data));
+            }
+
+            function sendMsg() {
+                ws.send(JSON.stringify({
+                    text: 'button clicked!'
+                }));
             }
         </script>
     </body>
