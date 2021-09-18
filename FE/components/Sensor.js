@@ -22,9 +22,9 @@ export default function SensorComponent() {
       }
       console.log(status)
 
-      // let location = await Location.getCurrentPositionAsync({});
-      // console.log(location)
-      // setLocation(location);
+      let location = await Location.getCurrentPositionAsync({});
+      console.log(location)
+      setLocation(location);
       console.log("Here")
     })();
   }, []);
