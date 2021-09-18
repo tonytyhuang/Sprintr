@@ -24,6 +24,20 @@ app.get('/', (req, res) => {
 var rooms = {};
 var clients = {};
 
+// Send new room details to everyone in the room
+const updateRoom = (roomID) => {
+    for (const [key, value] of Object.entries(rooms[roomID].friends)) {
+        let ws = clients[key].socket;
+        ws.send(JSON.stringify({
+            operation: "update-room",
+            data: {
+                roomID: roomID,
+                friends: rooms[roomID].friends
+            }
+        }));
+    }
+}
+
 // Join game
 app.post('/join-game', (req, res) => {
     console.log("Received request to join room");
@@ -37,27 +51,27 @@ app.post('/join-game', (req, res) => {
         // If no request, generate new room
         let roomID = Math.floor(Math.random() * 100);
         rooms[roomID] = {
-            friends: [clientID]
+            friends: {
+                [clientID]: {
+                    ready: false
+                }
+            }
         };
         res.send({
             joined: true,
             id: roomID,
-            friends: [clientID]
+            friends: {
+                [clientID]: {
+                    ready: false
+                }
+            }
         });
     } else if (requestRoomID in rooms) {
-        rooms[requestRoomID].friends.push(clientID);
-        // Send message to everybody that room was updated with new player
-        for (let i = 0; i < rooms[requestRoomID].friends.length; i++) {
-            let f = rooms[requestRoomID].friends[i];
-            console.log(f);
-            clients[f].socket.send(JSON.stringify({
-                operation: "update-room",
-                data: {
-                    roomID: requestRoomID,
-                    friends: rooms[requestRoomID].friends
-                }
-            }));
+        rooms[requestRoomID].friends[clientID] = {
+            ready: false
         }
+        // Send message to everybody that room was updated with new player
+        updateRoom(requestRoomID);
         // If requested room exists, send player to that room
         res.send({
             joined: true,
@@ -89,8 +103,8 @@ wss.on('connection', (ws) => {
         console.log("[Server] A message arrived: ");
         let message = JSON.parse(msg);
         console.log(message.text);
-        // When client first joins, initiate the user and store info
         if (message.operation === "initiate") {
+            // When client first joins, initiate the user and store info
             let clientID = message.data.id;
             clients[clientID] = {
                 socket: ws
@@ -99,23 +113,21 @@ wss.on('connection', (ws) => {
         } else if (message.operation === "leave-room") {
             let clientID = message.data.clientID;
             let roomID = message.data.roomID;
-            console.log(clientID + " leaving room " + roomID);
             // Remove user from their room
-            rooms[roomID].friends.splice(rooms[roomID].friends.indexOf(clientID));
+            delete rooms[roomID].friends[clientID];
             // Update room for users still in the room
-            for (let i = 0; i < rooms[roomID].friends.length; i++) {
-                ws.send(JSON.stringify({
-                    operation: "update-room",
-                    data: {
-                        roomID: roomID,
-                        friends: rooms[requestRoomID].friends
-                    }
-                }));
-            }
+            updateRoom(roomID);
             // Delete room if empty
             if (rooms[roomID].friends.length === 0) {
                 delete rooms[roomID];
             }
+        } else if (message.operation === "update-ready") {
+            // Ready/unready in the pre-race stage
+            let clientID = message.data.clientID;
+            let newReady = message.data.ready;
+            let roomID = message.data.roomID;
+            rooms[roomID].friends[clientID].ready = newReady;
+            updateRoom(roomID);
         }
     });
 })

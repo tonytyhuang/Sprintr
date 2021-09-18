@@ -28,7 +28,7 @@ export default function App() {
           <Stack.Screen name="Login" component={LoginPage} />
           <Stack.Screen name="Signup" component={SignupPage} />
           <Stack.Screen name="Lobby" component={LobbyPage} />
-          <Stack.Screen name="PreRace" component={PreRacePage} />
+          <Stack.Screen name="PreRace" component={PreRacePage} options={{headerShown: false}} />
           <Stack.Screen name="Game" component={GameTestPage} />
         </Stack.Navigator>
       </NavigationContainer>
