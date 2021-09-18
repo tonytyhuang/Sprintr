@@ -9,6 +9,7 @@ import {
 import LoginInput from "../components/LoginInput";
 import LoginButton from "../components/LoginButton";
 import OAuthButton from "../components/OAuthButton";
+import firebase from "firebase";
 
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
@@ -45,7 +46,12 @@ const SignupScreen = ({ navigation }) => {
         secureTextEntry={true}
       />
 
-      <LoginButton buttonTitle="Sign Up" />
+      <LoginButton
+        buttonTitle="Sign Up"
+        onPress={() => {
+          firebase.auth().createUserWithEmailAndPassword(email, password);
+        }}
+      />
 
       {Platform.OS === "android" ? (
         <View>

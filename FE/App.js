@@ -13,26 +13,21 @@ import { OnboardingScreen } from "./screens/Onboarding";
 import { SocketContext, SocketProvider } from "./SocketContext";
 import firebase from "firebase";
 import { firebaseConfig } from "./config";
+import { LoadingScreen } from "./screens/Loading";
 const Stack = createNativeStackNavigator();
 
-<<<<<<< HEAD
 export default function App() {
-  // const socket = useContext(SocketContext);
-  firebase.initializeApp(firebaseConfig);
-  useEffect(() => {
-    // socket.onopen = () => {
-    //   console.log("connected");
-    // }
-  }, []);
-
-=======
-export default function App() {  
->>>>>>> c6bb44c942d3a8820b82e49facb28a89e53a9a31
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  } else {
+    firebase.app();
+  }
   return (
     <SocketProvider>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Sprintr" component={OnboardingScreen} />
+          <Stack.Screen name="Loading" component={LoadingScreen} />
           <Stack.Screen name="Home" component={HomePage} />
           <Stack.Screen name="Login" component={LoginPage} />
           <Stack.Screen name="Signup" component={SignupPage} />
