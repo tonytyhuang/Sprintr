@@ -29,7 +29,7 @@ function GameTestPage({navigation}){
     });
     return(
         <View>
-            <SensorComponent/>
+           <SensorComponent/>
         </View>
     );
 }
