@@ -9,6 +9,7 @@ import SignupPage from "./screens/Signup";
 import LoginPage from "./screens/Login";
 import GamePage from "./screens/Game";
 import GameTestPage from "./screens/GameTest";
+import PreRacePage from "./screens/PreRace";
 import { OnboardingScreen } from "./screens/Onboarding";
 import { SocketContext, SocketProvider } from "./SocketContext";
 import firebase from "firebase";
@@ -27,6 +28,7 @@ export default function App() {
           <Stack.Screen name="Login" component={LoginPage} />
           <Stack.Screen name="Signup" component={SignupPage} />
           <Stack.Screen name="Lobby" component={LobbyPage} />
+          <Stack.Screen name="PreRace" component={PreRacePage} />
           <Stack.Screen name="Game" component={GameTestPage} />
         </Stack.Navigator>
       </NavigationContainer>
