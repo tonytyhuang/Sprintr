@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Platform,
   StyleSheet,
+  Alert,
 } from "react-native";
 import LoginInput from "../components/LoginInput";
 import LoginButton from "../components/LoginButton";
@@ -14,11 +15,22 @@ import firebase from "firebase";
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [username, setUsername] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Create an account</Text>
+
+      <LoginInput
+        labelValue={username}
+        onChangeText={(userName) => setUsername(userName)}
+        placeholderText="Username"
+        iconType="user"
+        keyboardType="default"
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
 
       <LoginInput
         labelValue={email}
@@ -49,7 +61,26 @@ const SignupScreen = ({ navigation }) => {
       <LoginButton
         buttonTitle="Sign Up"
         onPress={() => {
-          firebase.auth().createUserWithEmailAndPassword(email, password);
+          if (!username) {
+            Alert.alert("Must fill in username!");
+          } else if (!email) {
+            Alert.alert("Must fill in email!");
+          } else if (!password) {
+            Alert.alert("Must fill in password!");
+          } else {
+            firebase
+              .auth()
+              .createUserWithEmailAndPassword(email, password)
+              .then((user) => {
+                const userCreds = user;
+                userCreds.user.displayName = username;
+                console.log(userCreds);
+              })
+              .catch((err) => {
+                console.log(err);
+                Alert.alert(err.message);
+              });
+          }
         }}
       />
 
