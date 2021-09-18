@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Text } from "react-native";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import SocketLink from "./SocketLink";

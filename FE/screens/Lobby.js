@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import { SocketContext } from "../SocketContext";
 
 function LobbyPage({navigation}){
-    const { socket } = useCOntext(SocketContext);
+    const { socket } = useContext(SocketContext);
     const [name, setName] = useState('');
     const [roomId, setRoomId] = useState('');
 
