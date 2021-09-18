@@ -32,7 +32,7 @@ function LobbyPage({navigation}){
             />
             <TextInput
                 placeholder="Enter room Id"
-                onChangeText={roomId => setRoomId(roomId)}
+                onChangeText={roomId => roomId !== "" ? setRoomId(roomId) : setRoomId(-1)}
                 defaultValue=''
                 keyboardType='numeric'
             />
@@ -59,7 +59,7 @@ function LobbyPage({navigation}){
                                     id: data.id,
                                     friends: data.friends
                                 });
-                                navigation.navigate('Game');
+                                navigation.navigate('PreRace');
                             } else {
                                 // Send alert if room not found
                                 createRoomNotFoundAlert();
