@@ -1,44 +1,76 @@
-import React, { useState, useEffect } from 'react';
-import { Platform, Text, View, StyleSheet } from 'react-native';
-import Constants from 'expo-constants';
-import * as Location from 'expo-location';
+import React, { useState, useEffect } from "react";
+import { Platform, Text, View, StyleSheet } from "react-native";
+import Constants from "expo-constants";
+import * as Location from "expo-location";
 
 export default function SensorComponent() {
   const [timer, setTimer] = useState(0);
   const [distance, setDistance] = useState(0);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [lat, setLat] = useState(null);
+  const [lon, setLon] = useState(null);
+  const [previousDistance, setPreviousDistance] = useState(0);
+
+  function deg2rad(deg) {
+    return deg * (Math.PI / 180);
+  }
+
+  function getDistanceFromLatLonInM(lat1, lon1, lat2, lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2 - lat1); // deg2rad below
+    var dLon = deg2rad(lon2 - lon1);
+    var a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(deg2rad(lat1)) *
+        Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c; // Distance in km
+    return d * 10;
+  }
 
   useEffect(() => {
     (async () => {
-      if (Platform.OS === 'android' && !Constants.isDevice) {
+      if (Platform.OS === "android" && !Constants.isDevice) {
         setErrorMsg(
-          'Oops, this will not work on Snack in an Android emulator. Try it on your device!'
+          "Oops, this will not work on Snack in an Android emulator. Try it on your device!"
         );
         return;
       }
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('denied')
+      if (status !== "granted") {
+        console.log("denied");
         return;
       }
-      console.log(status)
+      console.log(status);
     })();
-    const interval = setInterval(async()=>{
+    const interval = setInterval(async () => {
       let location = await Location.getCurrentPositionAsync({});
-      if(location.coords.speed > 0.1){
-        setDistance(distance => distance + location.coords.speed )
+      if (!lat || !lon) {
+        setLat(location.coords.latitude);
+        setLon(location.coords.longitude);
+      } else {
+        const dist = getDistanceFromLatLonInM(
+          lat,
+          lon,
+          location.coords.latitude,
+          location.coords.longitude
+        );
+        console.log(dist);
+        if (dist != previousDistance && dist > 0.1) {
+          setDistance((distance) => distance + dist * 3);
+        }
       }
-      console.log(location.coords.speed)
-      
-    }, 1000)
+    }, 1000);
 
     return () => {
       clearInterval(interval);
-    }
+    };
   }, []);
 
-  let text = 'Waiting..';
+  let text = "Waiting..";
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
@@ -56,18 +88,15 @@ export default function SensorComponent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     padding: 20,
   },
   paragraph: {
     fontSize: 18,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
-
-
-
 
 // import React, { useState, useEffect } from 'react';
 // import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
