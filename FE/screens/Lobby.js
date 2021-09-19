@@ -132,6 +132,7 @@ function LobbyPage({ navigation }) {
               body: JSON.stringify({
                 roomID: roomId,
                 clientID: user.uid,
+                nickname: name
               }),
             })
               .then((json) => json.json())

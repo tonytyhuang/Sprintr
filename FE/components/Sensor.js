@@ -78,7 +78,7 @@ export default function SensorComponent() {
         if (dist != previousDistance && dist > 0.1) {
           
           // setDistance((distance) => distance + dist * 5);
-          distance.current += Math.abs(dist) * 5;
+          distance.current += Math.abs(dist) * 15;
           socket.send(JSON.stringify({
             operation: "update-race",
             data: {
