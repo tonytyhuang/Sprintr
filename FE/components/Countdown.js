@@ -39,19 +39,19 @@ const styles = StyleSheet.create({
     countdown: {
         position: 'absolute',
         alignSelf: "center",
-        top: (Dimensions.get('window').height/3.2) ,
+        top: (Dimensions.get('window').height/3.6) ,
         fontSize: 150
     },
     message: {
         position: 'absolute',
         alignSelf: "center",
-        top: (Dimensions.get('window').height/3.2) ,
+        top: (Dimensions.get('window').height/3.6) ,
         fontSize: 30
     },
     go: {
         position: 'absolute',
         alignSelf: "center",
-        top: (Dimensions.get('window').height/3) ,
+        top: (Dimensions.get('window').height/3.8) ,
         fontSize: 150
     }
 

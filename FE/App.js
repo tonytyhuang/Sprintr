@@ -14,6 +14,7 @@ import { SocketContext, SocketProvider } from "./SocketContext";
 import firebase from "firebase";
 import { firebaseConfig } from "./config";
 import { LoadingScreen } from "./screens/Loading";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
