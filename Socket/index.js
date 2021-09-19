@@ -44,6 +44,7 @@ app.post('/join-game', (req, res) => {
     // See if requested room ID exists
     let requestRoomID = req.body.roomID;
     let clientID = req.body.clientID;
+    let nickname = req.body.nickname;
 
     console.log(requestRoomID);
     console.log(clientID);
@@ -58,7 +59,8 @@ app.post('/join-game', (req, res) => {
             friends: {
                 [clientID]: {
                     ready: false,
-                    distance: 0
+                    distance: 0,
+                    name: nickname
                 }
             }
         };
@@ -68,14 +70,16 @@ app.post('/join-game', (req, res) => {
             friends: {
                 [clientID]: {
                     ready: false,
-                    distance: 0
+                    distance: 0,
+                    name: nickname
                 }
             }
         });
     } else if (requestRoomID in rooms) {
         rooms[requestRoomID].friends[clientID] = {
             ready: false,
-            distance: 0
+            distance: 0,
+            name: nickname
         }
         // Send message to everybody that room was updated with new player
         updateRoom(requestRoomID);
