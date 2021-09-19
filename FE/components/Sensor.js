@@ -1,16 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Platform, Text, View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 import * as Location from "expo-location";
+import { SocketContext } from "../SocketContext";
+import firebase from "firebase";
 
 export default function SensorComponent() {
   const [timer, setTimer] = useState(0);
-  const [distance, setDistance] = useState(0);
+  // const [distance, setDistance] = useState(0);
+  const distance = useRef(null);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [previousDistance, setPreviousDistance] = useState(0);
   const lat = useRef(null);
   const lon = useRef(null);
+  const { socket, room, setRoom } = useContext(SocketContext);
+  const user = firebase.auth().currentUser;
 
   function deg2rad(deg) {
     return deg * (Math.PI / 180);
@@ -71,7 +76,18 @@ export default function SensorComponent() {
           (lon.current = location.coords.longitude),
           console.log(dist);
         if (dist != previousDistance && dist > 0.1) {
-          setDistance((distance) => distance + dist * 5);
+          
+          // setDistance((distance) => distance + dist * 5);
+          distance.current += Math.abs(dist) * 5;
+          socket.send(JSON.stringify({
+            operation: "update-race",
+            data: {
+              roomID: room.id,
+              distance: distance.current,
+              clientID: user.uid
+            },
+            text: ("Update distance for " + user.uid + " " + ((distance.current).toString()))
+          }));
         }
       }
     }, 1000);
@@ -97,7 +113,7 @@ export default function SensorComponent() {
   return (
     <View style={styles.container}>
       <Text style={styles.paragraph}>{text}</Text>
-      <Text>{distance}</Text>
+      <Text>{distance.current}</Text>
     </View>
   );
 }

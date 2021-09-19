@@ -15,10 +15,6 @@ const SocketProvider = ({ children }) => {
   // id: The unique ID of the room
   // friends: A list of other users in the room
   const [room, setRoom] = useState(null);
-  // Race is a dictionary with the following keys:
-  // distance: An int value of the distance to run
-  // friends: A nested dictionary that maps each user to their update location/distance
-  const [race, setRace] = useState(null);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -67,7 +63,7 @@ const SocketProvider = ({ children }) => {
 
   return (
     <SocketContext.Provider
-      value={{socket, room, setRoom, race, setRace}}
+      value={{socket, room, setRoom}}
     >
       {children}
     </SocketContext.Provider>
