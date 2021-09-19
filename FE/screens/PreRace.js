@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
     },
     friendsContainer: {
         flexDirection: 'row',
+        flexWrap: 'wrap',
         marginVertical: 25
     },
     friend: {
