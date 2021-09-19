@@ -5,6 +5,8 @@ import CountDown from '../components/Countdown';
 import SensorComponent from '../components/Sensor';
 import { ProgressBar, Colors } from 'react-native-paper';
 import { Button } from 'react-native-elements';
+import { SocketContext } from '../SocketContext';
+import firebase from "firebase";
 
 const MaxDistance = 5000;
 
@@ -12,7 +14,9 @@ function GameTestPage({navigation}){
     
     const [dist1, setDist1] = useState(0);
     const [dist2, setDist2] = useState(0);
-    const [timer, setTimer] = useState(0)
+    const [timer, setTimer] = useState(0);
+    const { socket, room, setRoom } = useContext(SocketContext);
+    const user = firebase.auth().currentUser;
 
     useEffect(()=>{
         const interval = setInterval(()=>{
@@ -32,21 +36,24 @@ function GameTestPage({navigation}){
         <ImageBackground style={styles.container} source={require("./back3.png")}>
             
             <CountDown/>
-           <View>
+           {/* <View>
                <Text style={styles.topText}>My Progress</Text>
                 <ProgressBar progress={dist1/MaxDistance}
                     style={styles.progressbar}
                 />
                 <Text style={styles.botText}>{dist1}m / {MaxDistance}m</Text>
-           </View>
+           </View> */}
            {maybeTimer}
-           <View>
-                <Text style={styles.topText}>Opponent's Progress</Text>
-                <ProgressBar progress={dist2/MaxDistance}
-                style={styles.progressbar}
-                />
-                <Text style={styles.botText}>{dist2}m / {MaxDistance}m</Text>
-           </View>
+           {Object.keys(room.friends).map((friend) => {
+               return(
+                <View key={friend}>
+                    <Text style={styles.topText}>{friend}</Text>
+                    <ProgressBar progress={room.friends[friend].distance/MaxDistance} style={styles.progressbar} />
+                    <Text style={styles.botText}>{Math.round(room.friends[friend].distance)}m / {MaxDistance}m</Text>
+                </View>
+               );
+           })}
+           
            <Button
             title="Leave Race"
             buttonStyle={styles.button}
@@ -54,6 +61,7 @@ function GameTestPage({navigation}){
                 navigation.navigate("Home")
             }}
            />
+           <SensorComponent />
         </ImageBackground>
     );
 }
