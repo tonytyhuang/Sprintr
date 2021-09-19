@@ -17,6 +17,7 @@ import firebase from "firebase";
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const navigateHome = () => navigation.replace("Home");
   const logInEmail = () => {
     if (!email) {
       Alert.alert("Must fill in email!");
@@ -28,6 +29,7 @@ const LoginPage = ({ navigation }) => {
         .signInWithEmailAndPassword(email, password)
         .then((user) => {
           const userCreds = user;
+          navigateHome();
         })
         .catch((err) => {
           console.log(err);

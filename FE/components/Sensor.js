@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Platform, Text, View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 import * as Location from "expo-location";
@@ -8,9 +8,9 @@ export default function SensorComponent() {
   const [distance, setDistance] = useState(0);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [lat, setLat] = useState(null);
-  const [lon, setLon] = useState(null);
   const [previousDistance, setPreviousDistance] = useState(0);
+  const lat = useRef(null);
+  const lon = useRef(null);
 
   function deg2rad(deg) {
     return deg * (Math.PI / 180);
@@ -28,7 +28,7 @@ export default function SensorComponent() {
         Math.sin(dLon / 2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c; // Distance in km
-    return d * 10;
+    return d * 100;
   }
 
   useEffect(() => {
@@ -47,20 +47,31 @@ export default function SensorComponent() {
       console.log(status);
     })();
     const interval = setInterval(async () => {
-      let location = await Location.getCurrentPositionAsync({});
-      if (!lat || !lon) {
-        setLat(location.coords.latitude);
-        setLon(location.coords.longitude);
-      } else {
+      let location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Highest,
+      });
+      if (!lat.current) {
+        console.log(location);
+        lat.current = location.coords.latitude;
+        console.log(lat);
+      }
+      if (!lon.current) {
+        lon.current = location.coords.longitude;
+        console.log(lat);
+      }
+      console.log("load");
+      if (lat.current !== null && lon.current !== null) {
         const dist = getDistanceFromLatLonInM(
-          lat,
-          lon,
+          lat.current,
+          lon.current,
           location.coords.latitude,
           location.coords.longitude
         );
-        console.log(dist);
+        (lat.current = location.coords.latitude),
+          (lon.current = location.coords.longitude),
+          console.log(dist);
         if (dist != previousDistance && dist > 0.1) {
-          setDistance((distance) => distance + dist * 3);
+          setDistance((distance) => distance + dist * 5);
         }
       }
     }, 1000);
@@ -69,6 +80,12 @@ export default function SensorComponent() {
       clearInterval(interval);
     };
   }, []);
+
+  useEffect(() => {
+    return () => {
+      console.log("update");
+    };
+  }, [distance]);
 
   let text = "Waiting..";
   if (errorMsg) {
