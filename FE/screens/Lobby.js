@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 5,
         alignSelf: 'center',
-        color: '#120156'
+        color: '#494169'
     },
     smallText: {
         fontSize: 18,
