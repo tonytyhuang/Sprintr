@@ -8,20 +8,15 @@ import { Button } from 'react-native-elements';
 import { SocketContext } from '../SocketContext';
 import firebase from "firebase";
 
-const MaxDistance = 5000;
+const MaxDistance = 100;
 
 function GameTestPage({navigation}){
-    
-    const [dist1, setDist1] = useState(0);
-    const [dist2, setDist2] = useState(0);
     const [timer, setTimer] = useState(0);
     const { socket, room, setRoom } = useContext(SocketContext);
     const user = firebase.auth().currentUser;
 
     useEffect(()=>{
         const interval = setInterval(()=>{
-            setDist1(dist1 => dist1 + 10);
-            setDist2(dist2 => dist2 + 20);
             setTimer(timer => timer + 1);
         }, 1000);
 
@@ -36,18 +31,11 @@ function GameTestPage({navigation}){
         <ImageBackground style={styles.container} source={require("./back3.png")}>
             
             <CountDown/>
-           {/* <View>
-               <Text style={styles.topText}>My Progress</Text>
-                <ProgressBar progress={dist1/MaxDistance}
-                    style={styles.progressbar}
-                />
-                <Text style={styles.botText}>{dist1}m / {MaxDistance}m</Text>
-           </View> */}
            {maybeTimer}
            {Object.keys(room.friends).map((friend) => {
                return(
                 <View key={friend}>
-                    <Text style={styles.topText}>{friend}</Text>
+                    <Text style={styles.topText}>{room.friends[friend].name}</Text>
                     <ProgressBar progress={room.friends[friend].distance/MaxDistance} style={styles.progressbar} />
                     <Text style={styles.botText}>{Math.round(room.friends[friend].distance)}m / {MaxDistance}m</Text>
                 </View>

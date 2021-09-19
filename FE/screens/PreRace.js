@@ -76,7 +76,7 @@ function PreRacePage({navigation}){
 
                         return (
                             <View key={friend} style={styles.friend}>
-                                <Text style={styles.friendName}>{friend}</Text>
+                                <Text style={styles.friendName}>{room.friends[friend].name}</Text>
                                 <Text style={styles.friendStatus}>{room.friends[friend].ready ? "✅ Ready" : "❌ Not Ready"}</Text>
                             </View>
                         );
