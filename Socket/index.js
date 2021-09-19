@@ -57,7 +57,8 @@ app.post('/join-game', (req, res) => {
         rooms[roomID] = {
             friends: {
                 [clientID]: {
-                    ready: false
+                    ready: false,
+                    distance: 0
                 }
             }
         };
@@ -66,13 +67,15 @@ app.post('/join-game', (req, res) => {
             id: roomID,
             friends: {
                 [clientID]: {
-                    ready: false
+                    ready: false,
+                    distance: 0
                 }
             }
         });
     } else if (requestRoomID in rooms) {
         rooms[requestRoomID].friends[clientID] = {
-            ready: false
+            ready: false,
+            distance: 0
         }
         // Send message to everybody that room was updated with new player
         updateRoom(requestRoomID);
@@ -132,6 +135,13 @@ wss.on('connection', (ws) => {
             let newReady = message.data.ready;
             let roomID = message.data.roomID;
             rooms[roomID].friends[clientID].ready = newReady;
+            updateRoom(roomID);
+        } else if (message.operation === "update-race") {
+            // Send updated race details to each racer
+            let clientID = message.data.clientID;
+            let newDist = message.data.distance;
+            let roomID = message.data.roomID;
+            rooms[roomID].friends[clientID].distance = newDist;
             updateRoom(roomID);
         }
     });
