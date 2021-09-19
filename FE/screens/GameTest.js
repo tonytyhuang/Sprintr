@@ -47,6 +47,13 @@ function GameTestPage({navigation}){
                 />
                 <Text style={styles.botText}>{dist2}m / {MaxDistance}m</Text>
            </View>
+           <Button
+            title="Leave Race"
+            buttonStyle={styles.button}
+            onPress={() => {
+                navigation.navigate("Home")
+            }}
+           />
         </ImageBackground>
     );
 }
@@ -56,7 +63,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-evenly',
         padding: 20,
-        marginBottom: 10,
+        paddingTop: 100,
         height: Dimensions.get('window').height
       },
     progressbar: {
@@ -81,7 +88,13 @@ const styles = StyleSheet.create({
     messageFont:{
         padding: 100,
         fontSize: 48
-    }
+    },
+    button: {
+        backgroundColor: "#DD1313",
+        fontSize: 200,
+        width: 220,
+        alignSelf: 'center'
+      },
 
 });
 
