@@ -14,7 +14,7 @@ function HomePage({ navigation }) {
   return (
     <View style={styles.background}>
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>Hi Leon!</Text>
+        <Text style={styles.header}>Hi Tony!</Text>
         <Text style={styles.subheader}>It's a great day for racing. 💪</Text>
       </View>
       <View style={styles.container}>
