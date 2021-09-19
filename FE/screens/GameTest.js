@@ -8,7 +8,7 @@ import { Button } from 'react-native-elements';
 import { SocketContext } from '../SocketContext';
 import firebase from "firebase";
 
-const MaxDistance = 5000;
+const MaxDistance = 100;
 
 function GameTestPage({navigation}){
     
@@ -20,8 +20,8 @@ function GameTestPage({navigation}){
 
     useEffect(()=>{
         const interval = setInterval(()=>{
-            setDist1(dist1 => dist1 + 10);
-            setDist2(dist2 => dist2 + 20);
+            // setDist1(dist1 => dist1 + 10);
+            // setDist2(dist2 => dist2 + 20);
             setTimer(timer => timer + 1);
         }, 1000);
 
