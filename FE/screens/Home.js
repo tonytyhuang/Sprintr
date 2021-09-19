@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, Alert, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 import firebase from "firebase";
 
 function HomePage({ navigation }) {
@@ -18,7 +25,7 @@ function HomePage({ navigation }) {
           <Text style={styles.homeBtnText}>Go Racing 🏁</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => console.log("clicked progress")}
+          onPress={() => navigation.navigate("Progress")}
           style={styles.homeBtn}
         >
           <Text style={styles.homeBtnText}>View Progress 📈</Text>
@@ -36,47 +43,47 @@ function HomePage({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     paddingVertical: 15,
-    paddingHorizontal: 25
+    paddingHorizontal: 25,
   },
   header: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 30,
-    color: '#ffffff',
-    paddingVertical: 6
+    color: "#ffffff",
+    paddingVertical: 6,
   },
   subheader: {
-      color: '#ffffff',
-      fontSize: 14
+    color: "#ffffff",
+    fontSize: 14,
   },
   headerContainer: {
-      paddingBottom: 20,
-      paddingTop: 60,
-      paddingHorizontal: 25,
-      backgroundColor: '#257291'
+    paddingBottom: 20,
+    paddingTop: 60,
+    paddingHorizontal: 25,
+    backgroundColor: "#257291",
   },
   homeBtn: {
-    width: '100%',
+    width: "100%",
     height: 100,
-    backgroundColor: '#dde6ef',
+    backgroundColor: "#dde6ef",
     marginVertical: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 10,
-    shadowColor: '#333333',
+    shadowColor: "#333333",
     shadowOffset: {
       width: 3,
-      height: 3
+      height: 3,
     },
     shadowOpacity: 0.5,
-    shadowRadius: 6
+    shadowRadius: 6,
   },
   homeBtnText: {
     fontSize: 22,
-    fontWeight: 'bold'
-  }
+    fontWeight: "bold",
+  },
 });
 
 export default HomePage;

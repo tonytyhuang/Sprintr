@@ -19,13 +19,13 @@ export const OnboardingScreen = ({ navigation }) => {
           subtitle: "Virtually Compete to Win All the Glory",
         },
         {
-          backgroundColor: "#349fca",
+          backgroundColor: "#257291",
           image: <Image source={require("../assets/achievement.png")} />,
           title: "Compete to Win",
           subtitle: "Challenge Each Other to Improve",
         },
         {
-          backgroundColor: "#41c9ff",
+          backgroundColor: "#257291",
           image: <Image source={require("../assets/progress.png")} />,
           title: "Track Your Progress",
           subtitle: "Watch Your Fitness Journey Begin",
