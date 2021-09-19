@@ -14,6 +14,7 @@ import { SocketContext, SocketProvider } from "./SocketContext";
 import firebase from "firebase";
 import { firebaseConfig } from "./config";
 import { LoadingScreen } from "./screens/Loading";
+import UserHistory from "./screens/UserHistory";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,7 @@ export default function App() {
           <Stack.Screen name="Sprintr" component={OnboardingScreen} />
           <Stack.Screen name="Loading" component={LoadingScreen} />
           <Stack.Screen name="Home" component={HomePage} />
+          <Stack.Screen name="Progress" component={UserHistory} />
           <Stack.Screen name="Login" component={LoginPage} />
           <Stack.Screen name="Signup" component={SignupPage} />
           <Stack.Screen name="Lobby" component={LobbyPage} />
