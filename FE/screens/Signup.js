@@ -118,16 +118,17 @@ export default SignupScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f9fafd",
+    backgroundColor: "#dde6ef",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
+    height: "100%",
   },
   text: {
     fontSize: 28,
-    marginBottom: 10,
-    color: "#051d5f",
+    marginBottom: 30,
+    color: "#257291",
   },
   navButton: {
     marginTop: 15,
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
   navButtonText: {
     fontSize: 18,
     fontWeight: "500",
-    color: "#2e64e5",
+    color: "#257291",
   },
   textPrivate: {
     flexDirection: "row",

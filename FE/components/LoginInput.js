@@ -8,14 +8,14 @@ const LoginInput = ({ labelValue, placeholderText, iconType, ...rest }) => {
   return (
     <View style={styles.inputContainer}>
       <View style={styles.iconStyle}>
-        <AntDesign name={iconType} size={25} color="#666" />
+        <AntDesign name={iconType} size={25} color="#257291" />
       </View>
       <TextInput
         value={labelValue}
         style={styles.input}
         numberOfLines={1}
         placeholder={placeholderText}
-        placeholderTextColor="#666"
+        placeholderTextColor="#257291"
         {...rest}
       />
     </View>
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "#f2f8fd",
   },
   iconStyle: {
     padding: 10,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     padding: 10,
     flex: 1,
     fontSize: 16,
-    color: "#333",
+    color: "#257291",
     justifyContent: "center",
     alignItems: "center",
   },

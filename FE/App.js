@@ -27,13 +27,33 @@ export default function App() {
     <SocketProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Sprintr" component={OnboardingScreen} />
-          <Stack.Screen name="Loading" component={LoadingScreen} />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Sprintr"
+            component={OnboardingScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Loading"
+            component={LoadingScreen}
+          />
           <Stack.Screen name="Home" component={HomePage} />
-          <Stack.Screen name="Login" component={LoginPage} />
-          <Stack.Screen name="Signup" component={SignupPage} />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Login"
+            component={LoginPage}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Signup"
+            component={SignupPage}
+          />
           <Stack.Screen name="Lobby" component={LobbyPage} />
-          <Stack.Screen name="PreRace" component={PreRacePage} options={{headerShown: false}} />
+          <Stack.Screen
+            name="PreRace"
+            component={PreRacePage}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen name="Game" component={GameTestPage} />
         </Stack.Navigator>
       </NavigationContainer>

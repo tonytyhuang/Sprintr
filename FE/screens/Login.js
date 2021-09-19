@@ -28,7 +28,6 @@ const LoginPage = ({ navigation }) => {
         .signInWithEmailAndPassword(email, password)
         .then((user) => {
           const userCreds = user;
-          // console.log(userCreds);
         })
         .catch((err) => {
           console.log(err);
@@ -40,8 +39,6 @@ const LoginPage = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image source={require("../assets/sprintr.png")} style={styles.logo} />
-      <Text style={styles.text}>Sprintr</Text>
-
       <LoginInput
         labelValue={email}
         onChangeText={(userEmail) => setEmail(userEmail)}
@@ -104,17 +101,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     paddingTop: 50,
+    backgroundColor: "#dde6ef",
+    height: "100%",
   },
   logo: {
-    height: 100,
-    width: 100,
+    height: 120,
+    width: 250,
+    marginBottom: 40,
     resizeMode: "cover",
   },
   text: {
     fontSize: 28,
     marginTop: 20,
     marginBottom: 10,
-    color: "#051d5f",
+    color: "#257291",
   },
   navButton: {
     marginTop: 15,
@@ -125,6 +125,6 @@ const styles = StyleSheet.create({
   navButtonText: {
     fontSize: 18,
     fontWeight: "500",
-    color: "#2e64e5",
+    color: "#257291",
   },
 });
