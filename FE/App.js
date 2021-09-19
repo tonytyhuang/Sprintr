@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useContext } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -26,34 +25,18 @@ export default function App() {
   return (
     <SocketProvider>
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Sprintr"
-            component={OnboardingScreen}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Loading"
-            component={LoadingScreen}
-          />
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Sprintr" component={OnboardingScreen} />
+          <Stack.Screen name="Loading" component={LoadingScreen} />
           <Stack.Screen name="Home" component={HomePage} />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Login"
-            component={LoginPage}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Signup"
-            component={SignupPage}
-          />
+          <Stack.Screen name="Login" component={LoginPage} />
+          <Stack.Screen name="Signup" component={SignupPage} />
           <Stack.Screen name="Lobby" component={LobbyPage} />
-          <Stack.Screen
-            name="PreRace"
-            component={PreRacePage}
-            options={{ headerShown: false }}
-          />
+          <Stack.Screen name="PreRace" component={PreRacePage} />
           <Stack.Screen name="Game" component={GameTestPage} />
         </Stack.Navigator>
       </NavigationContainer>

@@ -10,6 +10,7 @@ function GameTestPage({navigation}){
     
     return(
         <View>
+            <CountDown/>
            <SensorComponent/>
         </View>
     );

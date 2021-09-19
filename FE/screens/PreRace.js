@@ -1,8 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useContext, useState } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import React, { useEffect, useContext, useState,} from 'react';
+import { StyleSheet, Text, View, TouchableOpacity , Dimensions} from 'react-native';
 import { SocketContext } from '../SocketContext';
 import firebase from 'firebase';
+import { Button } from 'react-native-elements';
+import { color } from 'react-native-elements/dist/helpers';
 
 // const user = firebase.auth().currentUser;
 
@@ -71,6 +73,7 @@ function PreRacePage({navigation}){
                 <View style={styles.friendsContainer}>
                     {/* Iterate through all users in the room and display name and ready state */}
                     {Object.keys(room.friends).map(friend => {
+
                         return (
                             <View key={friend} style={styles.friend}>
                                 <Text style={styles.friendName}>{friend}</Text>
@@ -79,7 +82,14 @@ function PreRacePage({navigation}){
                         );
                     })}
                 </View>
-                
+                <Button
+                    onPress={()=>{
+                        navigation.navigate("Game");
+                    }}
+                    title="Go Race!"
+                    buttonStyle={styles.startButton}
+                    disabled={!ready}
+                />
             </View>
         </View>
     );
@@ -122,6 +132,7 @@ const styles = StyleSheet.create({
     },
     friendsContainer: {
         flexDirection: 'row',
+        flexWrap: 'wrap',
         marginVertical: 25
     },
     friend: {
@@ -147,6 +158,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         textAlign: 'center'
+    },
+    startButton:{
+        fontSize: 200,
+        width: 200,
+        alignSelf:'center',
+        marginTop: 150
     }
 })
 
